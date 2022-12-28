@@ -1,52 +1,16 @@
-const router = require("express").Router();
-const ValidationError = require("../core/exceptions");
-const albumRepository  = require("../repository/album");
-const photoRepository = require("../repository/photo")
-const albumValidator = require("../validators/album");
+const albumes = [
+    {userId:1, id:1, title:"quidem molestiae enim"}
+]
 
-router.post("/", (req,res) =>{
-    const {body:album} = req;
-    res.status(201).send(album)
-})
+const getAll = () => albumes;
 
-router.get("/", (req,res) =>{
-    res.send(albumRepository.getAll());
-})
+const getById = id => {return albumes.find(album => album.id == id)};
 
-router.get("/:albumId", (req,res) =>{
+const getUser = userId => {return albumes.find(album => album.userId == userId)};
 
-})
 
-router.put("/:albumId" , (req,res) =>{
-    const { params : {albumId}} = req
-    const album = albumRepository.getById(albumId);
-    if(album){
-        res.status(200).send(album);
-    }
-    else{
-        res.status(400).send();
-    }
-})
-
-router.delete("/:albumId" , (req,res) =>{
-    const { params : {albumId}} = req
-    const album = albumRepository.getById(albumId);
-    if(album){
-        res.status(200).send(album);
-    }
-    else{
-        res.status(400).send();
-    }
-})
-
-router.get("/:albumId/photos" , (req,res) =>{
-    const { params : {albumId}} = req
-    const photo = photoRepository.getAlbum(albumId);
-    if(photo){
-        res.status(200).send(photo);
-    }
-    else{
-        res.status(400).send();
-    }
-})
-module.exports = router;
+module.exports ={
+    getAll,
+    getById,
+    getUser
+}
