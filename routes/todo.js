@@ -9,7 +9,16 @@ router.get ("/", (req,res)=>{
 
 router.post("/", (req,res) =>{
     const {body:todo} = req;
-    res.status(201).send(todo)
+    try{
+        todoValidator.save(todo);
+        res.status(201).send(todo)
+    }catch(error){
+        if(error instanceof ValidationError){
+            res.status(400).send({error: error.message})
+            return
+        }
+        res.status(500).send()
+    }
 })
 
 router.put("/:todoId" , (req,res) =>{

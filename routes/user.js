@@ -12,7 +12,17 @@ router.get("/", (req,res) =>{
 
 router.post("/", (req,res) =>{
     const {body:user} = req;
-    res.status(201).send(user)
+    try{
+        userValidator.save(user);
+        res.status(201).send(user)
+    }catch(error){
+        if(error instanceof ValidationError){
+            res.status(400).send({error: error.message})
+            return
+        }
+        console.log(error)
+        res.status(500).send()
+    }
 })
 
 router.delete("/:userId" , (req,res) =>{

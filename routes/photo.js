@@ -9,7 +9,17 @@ router.get("/", (req,res) =>{
 
 router.post("/", (req,res) =>{
     const {body:photo} = req;
-    res.status(201).send(photo)
+    try{
+        photoValidator.save(photo);
+        res.status(201).send(photo)
+    }catch(error){
+        if(error instanceof ValidationError){
+            res.status(400).send({error: error.message})
+            return
+        }
+        console.log(error)
+        res.status(500).send()
+    }
 })
 
 router.put("/:photoId" , (req,res) =>{

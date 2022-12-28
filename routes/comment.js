@@ -9,7 +9,17 @@ router.get("/", (req,res) =>{
 
 router.post("/", (req,res) =>{
     const {body:comment} = req;
-    res.status(201).send(comment)
+    try{
+        commentValidator.save(comment);
+        res.status(201).send(comment)
+    }catch(error){
+        if(error instanceof ValidationError){
+            res.status(400).send({error: error.message})
+            return
+        }
+        console.log(error)
+        res.status(500).send()
+    }
 })
 
 router.put("/:commentId" , (req,res) =>{
