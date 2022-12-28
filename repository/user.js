@@ -16,7 +16,7 @@ const users = [
     phone: "1-770-736-8031 x56442",
     website: "hidlegard.org",
     company:{
-        name:"Romaguera-Crona",
+        nameCompany:"Romaguera-Crona",
         catchPhrase: "Multi-layered client-server neural-net",
         bs:"harness real-time e-markets"
     }
