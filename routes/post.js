@@ -1,15 +1,57 @@
-const posts = [
-    {postId: 1, id: 1, title: "sunt aut facere repellat provident occaecati excepturi optio repehenderit", body: "quia et suscipfsdf recusandae expedita et cum nreprehenderit molestiae t ut quas totam nnostrum rerum est autem sunt rem eveniet archetcto"}
-]
+const router = require("express").Router();
+const ValidationError = require("../core/exceptions");
+const postRepository  = require("../repository/post");
+const commentRepository = require("../repository/comment")
+const postValidator = require("../validators/post");
 
-const getAll = () => posts;
+router.get("/", (req,res) =>{
+    res.send(postRepository.getAll());
+})
 
-const getById = id => {return posts.find(post => post.id == id)};
+router.post("/", (req,res) =>{
+    const {body:post} = req;
+    try{
+        postValidator.save(post);
+        res.status(201).send(post);
+    }catch(error){
+        if(error instanceof ValidationError){
+            res.status(400).send({error: error.message})
+            return
+        }
+        res.status(500).send()
+    }
+})
 
-const getUser = userId => {return posts.find(post => post.userId == userId)};
+router.put("/:postId" , (req,res) =>{
+    const { params : {postId}} = req
+    const post =postRepository.getById(postId);
+    if(post){
+        res.status(200).send(post);
+    }
+    else{
+        res.status(400).send();
+    }
+})
 
-module.exports ={
-    getAll,
-    getById,
-    getUser
-}
+router.delete("/:postId" , (req,res) =>{
+    const { params : {postId}} = req
+    const post =postRepository.getById(postId);
+    if(post){
+        res.status(200).send(post);
+    }
+    else{
+        res.status(400).send();
+    }
+})
+
+router.get("/:postId/comments" , (req, res) =>{
+    const { params : {postId}} = req
+    const comment = commentRepository.getPost(postId);
+    if(comment){
+        res.status(200).send(comment);
+    }
+    else{
+        res.status(400).send();
+    }
+})
+module.exports = router;
