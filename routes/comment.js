@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const ValidationError = require("../core/exceptions");
 const commentRepository  = require("../repository/comment");
-const commentValidator = require("../validators/comment");
+const commentValidator = require("../bodyValidators/comment");
 
 router.get("/", (req,res) =>{
     res.send(commentRepository.getAll());

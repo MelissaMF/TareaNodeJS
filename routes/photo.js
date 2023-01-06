@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const ValidationError = require("../core/exceptions");
 const photoRepository  = require("../repository/photo");
-const photoValidator = require("../validators/photo");
+const photoValidator = require("../bodyValidators/photo");
 
 router.get("/", (req,res) =>{
     res.send(photoRepository.getAll());

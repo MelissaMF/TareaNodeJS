@@ -2,7 +2,7 @@ const router = require("express").Router();
 const ValidationError = require("../core/exceptions");
 const albumRepository  = require("../repository/album");
 const photoRepository = require("../repository/photo")
-const albumValidator = require("../validators/album");
+const albumValidator = require("../bodyValidators/album");
 
 router.post("/", (req,res) =>{
     const {body:album} = req;

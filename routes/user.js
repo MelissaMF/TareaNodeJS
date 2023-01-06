@@ -4,7 +4,7 @@ const userRepository  = require("../repository/user");
 const albumRepository = require("../repository/album")
 const postRepository = require("../repository/post");
 const todoRepository = require("../repository/todo")
-const userValidator = require("../validators/user");
+const userValidator = require("../bodyValidators/user");
 
 router.get("/", (req,res) =>{
     res.send(userRepository.getAll())

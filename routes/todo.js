@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const ValidationError = require("../core/exceptions");
 const todoRepository  = require("../repository/todo");
-const todoValidator = require("../validators/todo");
+const todoValidator = require("../bodyValidators/todo");
 
 router.get ("/", (req,res)=>{
     res.send(todoRepository.getAll());

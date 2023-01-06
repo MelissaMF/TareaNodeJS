@@ -2,7 +2,7 @@ const router = require("express").Router();
 const ValidationError = require("../core/exceptions");
 const postRepository  = require("../repository/post");
 const commentRepository = require("../repository/comment")
-const postValidator = require("../validators/post");
+const postValidator = require("../bodyValidators/post");
 
 router.get("/", (req,res) =>{
     res.send(postRepository.getAll());
