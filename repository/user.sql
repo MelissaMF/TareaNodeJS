@@ -12,7 +12,7 @@ CREATE TABLE public.user(
     phone character varying(64) NOT NULL,
     website character varying(64) NOT NULL,
     nameCompany character varying(64) NOT NULL,
-    catchPrase character varying(64) NOT NULL,}
-    bs character varying(64) NOT NULL
+    catchPrase character varying(64) NOT NULL,
+    bs character varying(64) NOT NULL,
     PRIMARY KEY(id)
  )

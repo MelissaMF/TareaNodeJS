@@ -3,6 +3,6 @@ CREATE TABLE public.comment (
     id serial,
     name character varying(64) NOT NULL,
     email character varying(64) NOT NULL,
-    body character varying(64) NOT NULL
+    body text NOT NULL,
     PRIMARY KEY(id)
 );

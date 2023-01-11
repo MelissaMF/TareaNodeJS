@@ -1,8 +1,8 @@
 CREATE TABLE public.photo(
     albumId integer NOT NULL,
     id serial,
-    title character varying(64) NOT NULL,
-    url character varying(64) NOT NULL,
-    thumbnailUrl character
+    title text NOT NULL,
+    url text NOT NULL,
+    thumbnailUrl text,
     PRIMARY KEY(id)
 )
