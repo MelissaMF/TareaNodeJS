@@ -3,15 +3,24 @@ const ValidationError = require("../core/exceptions");
 const photoRepository  = require("../repository/photo");
 const photoValidator = require("../bodyValidators/photo");
 
-router.get("/", (req,res) =>{
-    res.send(photoRepository.getAll());
+router.get("/", async (req,res) =>{
+    try {
+        res.send(await photoRepository.getAll())
+    } catch (error) {       
+    if (error instanceof ValidationError) {
+        res.status(400).send({ error: error.message })
+        return
+      }
+        res.status(500).send()
+    }
 })
 
-router.post("/", (req,res) =>{
+router.post("/", async (req,res) =>{
     const {body:photo} = req;
     try{
         photoValidator.save(photo);
-        res.status(201).send(photo)
+        const newPhoto = await photoRepository.save(photo)
+        res.status(201).send(newPhoto)
     }catch(error){
         if(error instanceof ValidationError){
             res.status(400).send({error: error.message})
@@ -22,14 +31,25 @@ router.post("/", (req,res) =>{
     }
 })
 
-router.put("/:photoId" , (req,res) =>{
+router.put("/:photoId" , async (req,res) =>{
     const { params : {photoId}} = req
-    const photo =photoRepository.getById(photoId);
+    const photo = await photoRepository.getById(photoId);
     if(photo){
         res.status(200).send(photo);
     }
     else{
         res.status(400).send();
+    }
+})
+
+router.get('/:photoId', async (req,res) => {
+    const { params: {photoId} } = req
+    const photo = await photoRepository.getById(photoId)
+    if (photo) {
+        res.status(200).send(photo)
+    }
+    else {
+        res.status(404).send()
     }
 })
 

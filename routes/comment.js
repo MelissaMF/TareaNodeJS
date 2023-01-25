@@ -3,15 +3,24 @@ const ValidationError = require("../core/exceptions");
 const commentRepository  = require("../repository/comment");
 const commentValidator = require("../bodyValidators/comment");
 
-router.get("/", (req,res) =>{
-    res.send(commentRepository.getAll());
+router.get("/", async (req,res) =>{
+    try {
+        res.send(await commentRepository.getAll())
+    } catch (error) {
+    if (error instanceof ValidationError) {
+        res.status(400).send({ error: error.message })
+        return
+      }
+        res.status(500).send()
+    }
 })
 
-router.post("/", (req,res) =>{
+router.post("/", async (req,res) =>{
     const {body:comment} = req;
     try{
-        commentValidator.save(comment);
-        res.status(201).send(comment)
+        commentValidator.save(comment)
+        const newComment = await commentRepository.save(comment)
+        res.status(201).send(newComment)
     }catch(error){
         if(error instanceof ValidationError){
             res.status(400).send({error: error.message})
@@ -22,14 +31,25 @@ router.post("/", (req,res) =>{
     }
 })
 
-router.put("/:commentId" , (req,res) =>{
+router.put("/:commentId" , async (req,res) =>{
     const { params : {commentId}} = req
-    const comment =commentRepository.getById(commentId);
+    const comment = await commentRepository.getById(commentId);
     if(album){
         res.status(200).send(comment);
     }
     else{
         res.status(400).send();
+    }
+})
+
+router.get('/:commentId', async (req,res) => {
+    const { params: { commentId} } = req
+    const comment = await commentRepository.getById(commentId)
+    if (comment){
+        res.status(200).send(comment)
+    }
+    else {
+        res.status(400).send()
     }
 })
 

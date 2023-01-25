@@ -6,8 +6,16 @@ const postRepository = require("../repository/post");
 const todoRepository = require("../repository/todo")
 const userValidator = require("../bodyValidators/user");
 
-router.get("/", (req,res) =>{
-    res.send(userRepository.getAll())
+router.get("/", async (req,res) =>{
+    try {
+        res.send(await userRepository.getAll())
+    } catch (error) {
+        if (error instanceof ValidationError) {
+            res.status(400).send({ error: error.message })
+            return
+          }
+            res.status(500).send()
+    }
 })
 
 router.post("/", (req,res) =>{
