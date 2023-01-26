@@ -40,11 +40,26 @@ const getById = async (id) => {
     return comment
 }
 
+const deleteById = async (id) => {
+    const conexion = await conectar()
+    const query = `
+          UPDATE comment
+          SET deleted_at = now()
+          WHERE id = $1
+          RETURNING *
+      `
+    const result = await conexion.query(query, [id])
+  
+    conexion.release()
+  
+    return result.rows[0]
+  }
+
 const getPost = postId => {return comments.find(comment => comment.postId == postId)};
 
 module.exports ={
     getAll,
     save,
     getById,
-    getPost
+    delete: deleteById
 }

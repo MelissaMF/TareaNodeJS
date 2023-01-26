@@ -40,11 +40,25 @@ const getById = async (id) => {
     return photo
 }
 
-const getAlbum = albumId => {return photos.find(photo => photo.albumId == albumId)};
+const deleteById = async (id) => {
+    const conexion = await conectar()
+    const query = `
+          UPDATE photo
+          SET deleted_at = now()
+          WHERE id = $1
+          RETURNING *
+      `
+    const result = await conexion.query(query, [id])
+  
+    conexion.release()
+  
+    return result.rows[0]
+  }
+
 
 module.exports ={
     getAll,
     save,
     getById,
-    getAlbum
+    delete: deleteById
 }

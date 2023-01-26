@@ -19,7 +19,7 @@ if(body.length == 0){
 }
 
 //Nombre
-if(name.length<100 || name.length>500){
+if(name.length<10 || name.length>50){
     throw new ValidationError("Revise extensión del nombre");
 }
 
@@ -29,7 +29,7 @@ if(email[email.length-1] != "com" && email[email.length-1] != "cl"){
     throw new ValidationError("Revise dominio de correo");
 }
 //Body
-if(body.length<100 || body.length>500){
+if(body.length<10 || body.length>50){
     throw new ValidationError("Revise extensión del cuerpo");
 }
 }

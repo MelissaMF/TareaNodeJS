@@ -1,16 +1,15 @@
 const { assert, expect } = require('chai')
 const commentBodyValidation = require('../../bodyValidators/comment')
 const ValidationError = require('../../core/exceptions')
-const { should } =require('chai')
 
 describe('Comment Body Validator', () => {
     describe('Name', () => {
         it('No debería estar vacío', () => {
             try {
                 const comment = {
-                    'name': '',
+                    'name': 'abcdefghij',
                     'email' : 'miau@miau.cl',
-                    'body': 'djfhdf'
+                    'body': 'djfhdfasdfgh'
                 }
                 assert.doesNotThrow(() => commentBodyValidation.save(comment), ValidationError)
                 return Promise.resolve()

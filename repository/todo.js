@@ -40,11 +40,24 @@ const getById = async (id) => {
     return todo
 }
 
-const getUser = userId => {return todos.find(todo => todo.userId == userId)};
+const deleteById = async (id) => {
+    const conexion = await conectar()
+    const query = `
+          UPDATE todo
+          SET deleted_at = now()
+          WHERE id = $1
+          RETURNING *
+      `
+    const result = await conexion.query(query, [id])
+  
+    conexion.release()
+  
+    return result.rows[0]
+  }
 
 module.exports ={
     getAll,
     save,
     getById,
-    getUser
+    delete: deleteById
 }

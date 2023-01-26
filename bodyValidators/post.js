@@ -12,11 +12,11 @@ if(title.length == 0 || body.length == 0){
 }
 
 //Title
-if(title.length<100 || title.length>500){
+if(title.length<10 || title.length>50){
     throw new ValidationError("Revise extensión del título");
 }
 //Body
-if(body.length<100 || body.length>500){
+if(body.length<10 || body.length>50){
     throw new ValidationError("Revise extensión del cuerpo");
 }
 

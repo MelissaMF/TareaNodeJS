@@ -52,9 +52,9 @@ router.put("/:albumId" , async (req,res) =>{
     }
 })
 
-router.delete("/:albumId" , (req,res) =>{
+router.delete("/:albumId" , async (req,res) =>{
     const { params : {albumId}} = req
-    const album = albumRepository.getById(albumId);
+    const album = await albumRepository.getById(albumId);
     if(album){
         res.status(200).send(album);
     }
@@ -63,9 +63,9 @@ router.delete("/:albumId" , (req,res) =>{
     }
 })
 
-router.get("/:albumId/photos" , (req,res) =>{
+router.get("/:albumId/photos" , async (req,res) =>{
     const { params : {albumId}} = req
-    const photo = photoRepository.getAlbum(albumId);
+    const photo = await photoRepository.getAlbum(albumId);
     if(photo){
         res.status(200).send(photo);
     }
