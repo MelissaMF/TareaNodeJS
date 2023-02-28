@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
-    "unit-test": "mocha ./test/unit/photo.js"
+    "unit-test": "mocha ./test/unit/todo.js"
   },
   "author": "",
   "license": "ISC",
